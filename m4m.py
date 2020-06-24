@@ -85,5 +85,3 @@ for user in data["M4M_Phase1_2"]:
 #     writer.writerow(["userID", "monster_number", "reasonings"])
 #     for row in writer:
 #     	print()
-
-
