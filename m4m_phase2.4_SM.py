@@ -16,8 +16,8 @@ def readTimestamp(timestamp):
 	### Since we are only recording the time difference we do NOT have to worry about this issue. 
 
 def getRoundTime(user,whichRound):
-	ts = data["M4M_Phase2_AMT"][user]["timestamps"]
-	rnd = data["M4M_Phase2_AMT"][user]
+	ts = data["M4M_Phase2_SM"][user]["timestamps"]
+	rnd = data["M4M_Phase2_SM"][user]
 	startTime = ""
 	endTime = ""
 	total_Dur=""
@@ -154,12 +154,14 @@ def firstLetter(ts):
 		if ( ts[t].startswith("\"round ") and ts[t].endswith("begins\"")  ) : 
 			return ts[t][6]
 
-for user in data["M4M_Phase2_AMT"]: 
-	#print (user)
 
+
+for user in data["M4M_Phase2_SM"]: 
+	#print (user)
 	try:
-		print ("Monster Choice: " + data["M4M_Phase2_AMT"][user]["monster choice"])
-		data["M4M_Phase2_AMT"][user]["results"] = getRoundTime(user,firstLetter(data["M4M_Phase2_AMT"][user]["timestamps"])) 
+		print ("Monster Choice: " + data["M4M_Phase2_SM"][user]["monster choice"])
+		data["M4M_Phase2_SM"][user]["results"] = getRoundTime(user,firstLetter(data["M4M_Phase2_SM"][user]["timestamps"])) ## getRoundTime's function second argument is "A", 
+		#the problem is for some users whichRound did not always start with A for whatever reason/bug.
 		print ("")
 	except Exception as e:
 		print (e)
@@ -167,65 +169,48 @@ for user in data["M4M_Phase2_AMT"]:
 
 
 
-
- ##calling the function firstLetter
-
-
-
-# for ts in data["M4M_Phase2_AMT"][user]["timestamps"]: 
-# 	#print (user)	
-# 	try:
-# 		#print ("Monster Choice: " + data["M4M_Phase2_AMT"][user]["monster choice"])
-# 		#ts = data["M4M_Phase2_AMT"][user]["timestamps"]
-# 		data["M4M_Phase2_AMT"][user]["results"] = getRoundTime(user,ts[6]) 
-# 		## getRoundTime's function second argument is WHATEVER STRING (A, B, C, D, E) appears first, 
-# 		print ("")
-# 	except Exception as e:
-# 		print (e)
-# 		print ("")
-
-with open('m4m_AMT.csv', 'w') as file:
+with open('m4m_SM.csv', 'w') as file:
     writer = csv.writer(file)
     writer.writerow(["userID","Monster_Number","First Rnd to Game Result Duration","Community Board Freq Clicks Array","CB Clicks A",
     	"CB Clicks B","CB Clicks C","CB Clicks D","CB Clicks E","RndA Duration","RndB Duration","RndC Duration","RndD Duration","RndE Duration",
     	"Init Choice","Init Reason","Community Choice","Community Reason","Init Choice","Init Reason","Community Choice","Community Reason","Init Choice","Init Reason","Community Choice","Community Reason","Init Choice","Init Reason","Community Choice","Community Reason","Init Choice","Init Reason","Community Choice","Community Reason",
     	"Rnd1 Answer Change","Rnd2 Answer Change","Rnd3 Answer Change","Rnd4 Answer Change","Rnd5 Answer Change" ])
-    for row in data["M4M_Phase2_AMT"]:
+    for row in data["M4M_Phase2_SM"]:
     	try:
-    		writer.writerow([ row, data["M4M_Phase2_AMT"][row]["monster choice"],data["M4M_Phase2_AMT"][row]["results"]["total duration"],data["M4M_Phase2_AMT"][row]["results"]["frequency clicks all"],
-    		
-    		
+    		writer.writerow([ row, data["M4M_Phase2_SM"][row]["monster choice"],data["M4M_Phase2_SM"][row]["results"]["total duration"],data["M4M_Phase2_SM"][row]["results"]["frequency clicks all"],
+
     		## community board clicks to see "engagement" in order of rounds
-    		data["M4M_Phase2_AMT"][row]["results"]["community 1 clicks"],data["M4M_Phase2_AMT"][row]["results"]["community 2 clicks"],data["M4M_Phase2_AMT"][row]["results"]["community 3 clicks"],
-    		data["M4M_Phase2_AMT"][row]["results"]["community 4 clicks"],data["M4M_Phase2_AMT"][row]["results"]["community 5 clicks"],
+    		data["M4M_Phase2_SM"][row]["results"]["community 1 clicks"],data["M4M_Phase2_SM"][row]["results"]["community 2 clicks"],data["M4M_Phase2_SM"][row]["results"]["community 3 clicks"],
+    		data["M4M_Phase2_SM"][row]["results"]["community 4 clicks"],
+    		data["M4M_Phase2_SM"][row]["results"]["community 5 clicks"],
 
     		## durations in order of rounds 
-    		data["M4M_Phase2_AMT"][row]["results"]["round 1 duration"],data["M4M_Phase2_AMT"][row]["results"]["round 2 duration"],data["M4M_Phase2_AMT"][row]["results"]["round 3 duration"],
-    		data["M4M_Phase2_AMT"][row]["results"]["round 4 duration"],data["M4M_Phase2_AMT"][row]["results"]["round 5 duration"],
+    		data["M4M_Phase2_SM"][row]["results"]["round 1 duration"],data["M4M_Phase2_SM"][row]["results"]["round 2 duration"],data["M4M_Phase2_SM"][row]["results"]["round 3 duration"],
+    		data["M4M_Phase2_SM"][row]["results"]["round 4 duration"],data["M4M_Phase2_SM"][row]["results"]["round 5 duration"],
     		
     		#round 1 -- choices and reasons
-    		data["M4M_Phase2_AMT"][row]["results"]["initial choices"][0],data["M4M_Phase2_AMT"][row]["results"]["initial reasons"][0],
-    		data["M4M_Phase2_AMT"][row]["results"]["comm choices"][0],data["M4M_Phase2_AMT"][row]["results"]["comm reasons"][0],
+    		data["M4M_Phase2_SM"][row]["results"]["initial choices"][0],data["M4M_Phase2_SM"][row]["results"]["initial reasons"][0],
+    		data["M4M_Phase2_SM"][row]["results"]["comm choices"][0],data["M4M_Phase2_SM"][row]["results"]["comm reasons"][0],
 
     		#round 2 -- choices and reasons
-    		data["M4M_Phase2_AMT"][row]["results"]["initial choices"][1],data["M4M_Phase2_AMT"][row]["results"]["initial reasons"][1],
-    		data["M4M_Phase2_AMT"][row]["results"]["comm choices"][1],data["M4M_Phase2_AMT"][row]["results"]["comm reasons"][1],
+    		data["M4M_Phase2_SM"][row]["results"]["initial choices"][1],data["M4M_Phase2_SM"][row]["results"]["initial reasons"][1],
+    		data["M4M_Phase2_SM"][row]["results"]["comm choices"][1],data["M4M_Phase2_SM"][row]["results"]["comm reasons"][1],
 
     		#round 3 -- choices and reasons
-    		data["M4M_Phase2_AMT"][row]["results"]["initial choices"][2],data["M4M_Phase2_AMT"][row]["results"]["initial reasons"][2],
-    		data["M4M_Phase2_AMT"][row]["results"]["comm choices"][2],data["M4M_Phase2_AMT"][row]["results"]["comm reasons"][2],
+    		data["M4M_Phase2_SM"][row]["results"]["initial choices"][2],data["M4M_Phase2_SM"][row]["results"]["initial reasons"][2],
+    		data["M4M_Phase2_SM"][row]["results"]["comm choices"][2],data["M4M_Phase2_SM"][row]["results"]["comm reasons"][2],
 
     		#round 4 -- choices and reasons
-    		data["M4M_Phase2_AMT"][row]["results"]["initial choices"][3],data["M4M_Phase2_AMT"][row]["results"]["initial reasons"][3],
-    		data["M4M_Phase2_AMT"][row]["results"]["comm choices"][3],data["M4M_Phase2_AMT"][row]["results"]["comm reasons"][3],
+    		data["M4M_Phase2_SM"][row]["results"]["initial choices"][3],data["M4M_Phase2_SM"][row]["results"]["initial reasons"][3],
+    		data["M4M_Phase2_SM"][row]["results"]["comm choices"][3],data["M4M_Phase2_SM"][row]["results"]["comm reasons"][3],
 
     		#round 5 -- choices and reasons
-    		data["M4M_Phase2_AMT"][row]["results"]["initial choices"][4],data["M4M_Phase2_AMT"][row]["results"]["initial reasons"][4],
-    		data["M4M_Phase2_AMT"][row]["results"]["comm choices"][4],data["M4M_Phase2_AMT"][row]["results"]["comm reasons"][4],
+    		data["M4M_Phase2_SM"][row]["results"]["initial choices"][4],data["M4M_Phase2_SM"][row]["results"]["initial reasons"][4],
+    		data["M4M_Phase2_SM"][row]["results"]["comm choices"][4],data["M4M_Phase2_SM"][row]["results"]["comm reasons"][4],
 
-    		data["M4M_Phase2_AMT"][row]["results"]["answer change"][0],data["M4M_Phase2_AMT"][row]["results"]["answer change"][1], data["M4M_Phase2_AMT"][row]["results"]["answer change"][2], 
-    		data["M4M_Phase2_AMT"][row]["results"]["answer change"][3], data["M4M_Phase2_AMT"][row]["results"]["answer change"][4]
-    		])
+    		data["M4M_Phase2_SM"][row]["results"]["answer change"][0],data["M4M_Phase2_SM"][row]["results"]["answer change"][1], data["M4M_Phase2_SM"][row]["results"]["answer change"][2], 
+    		data["M4M_Phase2_SM"][row]["results"]["answer change"][3], data["M4M_Phase2_SM"][row]["results"]["answer change"][4]
+    			])
     	except Exception as e:
     		print (e)
 
