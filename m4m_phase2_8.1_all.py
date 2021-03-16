@@ -3,9 +3,9 @@ import datetime
 import csv
 
 with open("meal4monsters-export_v5.1.json", "r") as read_file:
-    data = json.load(read_file)  
+	data = json.load(read_file)
 
-
+# initializing the variable 'users' with the value of a list of user IDs
 users = [ 
 
 "ID-0812-125410AMBRT-93573122",
@@ -98,15 +98,16 @@ users = [
 "ID-0826-124603PMIST-530874004"
 ]
 
-
+# definining a function 'getOrderOfRounds' being passed the argument 'dict'
 def getOrderOfRounds(dict):
-	roundLetters = []
-	for x in xrange(1,6):
-		for field in dict:
-			if (field[8] == str(x)):
-				roundLetters.append(field[6])
-				break
-	return roundLetters
+	roundLetters = []		# creating an empty list
+	for x in xrange(1,6):   # for loop: for each value 'x' from 1 through 6...
+		for field in dict:		# for each value 'field' in the 'dict' to be passed into the fn when called...
+			if (field[8] == str(x)):   # if the 9th value of the list 'field' is equal to the string 'x' (from above),
+				roundLetters.append(field[6])  # add the 7th value of the list 'field' to the 'roundLetters' list (from above)
+				break		# break the for loop, so continue iterating the outer for loop.
+	return roundLetters     # when the outer for loop has gone through every 'x' value, the function is complete
+							## and the list 'roundLetters' is returned.
 
 roundInfoAMT = [ ]
 for item in users:
