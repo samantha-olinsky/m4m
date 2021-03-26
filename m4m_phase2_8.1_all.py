@@ -98,9 +98,9 @@ users = [
 "ID-0826-124603PMIST-530874004"
 ]
 
-# definining a function 'getOrderOfRounds' being passed the argument 'dict'
+# defining a function 'getOrderOfRounds' being passed the argument 'dict'
 def getOrderOfRounds(dict):
-	roundLetters = []		# creating an empty list
+	roundLetters = []		# creating an empty list inside the variable 'roundLetters'
 	for x in xrange(1,6):   # for loop: for each value 'x' from 1 through 6...
 		for field in dict:		# for each value 'field' in the 'dict' to be passed into the fn when called...
 			if (field[8] == str(x)):   # if the 9th value of the list 'field' is equal to the string 'x' (from above),
@@ -109,18 +109,24 @@ def getOrderOfRounds(dict):
 	return roundLetters     # when the outer for loop has gone through every 'x' value, the function is complete
 							## and the list 'roundLetters' is returned.
 
-roundInfoAMT = [ ]
-for item in users:
-	for userRnd in data["M4M_Phase2_AMT"]: 
-		if (item == userRnd):
-			letters = getOrderOfRounds(data["M4M_Phase2_AMT"][userRnd])	
-			print(userRnd + ", " + ", ".join(letters))
-print (roundInfoAMT)
 
+# creating a global variable, 'roundInfoAMT' with an empty list
+roundInfoAMT = [ ]
+for item in users:		# for loop: for each value 'item' within the list 'users'
+	for userRnd in data["M4M_Phase2_AMT"]: 	# for each value 'userRnd' within that list of the data,
+		if (item == userRnd):				# if the value of the item (userID) is equal to the 'userRnd' value from the data list,
+			letters = getOrderOfRounds(data["M4M_Phase2_AMT"][userRnd])
+			# set variable 'letters' equal to the result of passing the data of userRnd from the data list to function above
+			print(userRnd + ", " + ", ".join(letters))
+		# printing the value of userRnd, followed by all the values of 'letters'  joined by commas
+print (roundInfoAMT)
+# is the original list ever appended? or is it just returning an empty list?
+
+
+# repeating the process above, but with SM data, not AMT
 roundInfoSM = [ ]
 for item in users:
-	for userRnd in data["M4M_Phase2_SM"]: 
-	
+	for userRnd in data["M4M_Phase2_SM"]:
 		if (item == userRnd):
 			letters = getOrderOfRounds(data["M4M_Phase2_SM"][userRnd])	
 			print(userRnd + ", " + ", ".join(letters))
